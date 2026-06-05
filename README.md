@@ -1,5 +1,9 @@
 # CNNC-Lab paper template
 
+[![Lint](https://github.com/CNNC-Lab/paper-template/actions/workflows/lint.yml/badge.svg)](https://github.com/CNNC-Lab/paper-template/actions/workflows/lint.yml)
+[![LaTeX](https://github.com/CNNC-Lab/paper-template/actions/workflows/latex.yml/badge.svg)](https://github.com/CNNC-Lab/paper-template/actions/workflows/latex.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
 A single, portable LaTeX repository for computational-neuroscience manuscripts that carries a paper
 through the whole publication lifecycle: **draft → submission → peer review → tracked revision →
 camera-ready**.
