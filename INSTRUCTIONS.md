@@ -99,11 +99,16 @@ On Overleaf, do the same by editing the first line of `main.tex` directly:
    ```latex
    \documentclass[draft]{cnnclab}
    \title{...}
-   \author{...}                  % see the title-block macros in cnnclab.cls
+   \author{R. Duarte\,\orcidlink{0000-0001-6099-667X}\textsuperscript{1,2}}
+   \affiliation{1}{CNC-UC -- Center for Neuroscience and Cell Biology, University of Coimbra, ...}
+   \affiliation{2}{CIBB -- Centre for Innovative Biomedicine and Biotechnology, University of Coimbra, ...}
    \corresponding{rcfduarte@gmail.com}
    \keywords{...}
    \addbibresource{refs.bib}
    ```
+   - **Affiliations:** one `\affiliation{<mark>}{<text>}` per call; they render in small type under
+     the authors. CNC-UC researchers must use the **CNC-UC** and **CIBB** affiliations separately.
+   - **ORCID:** put `\orcidlink{<id>}` anywhere in `\author` (it renders the linked iD icon).
 2. Write each section in its own file under `sections/` (`introduction.tex`, `results.tex`, …).
    `main.tex` pulls them in with `\sectioninput{introduction}` (the class macro that honors
    variants — see §4).
@@ -126,6 +131,20 @@ On Overleaf, do the same by editing the first line of `main.tex` directly:
 | `lineno`     | Force line numbers independently. |
 
 `submission` already bundles `endfloat + lineno + double spacing`; you rarely combine them by hand.
+
+### Acknowledgements & funding
+
+Add a compact, smaller-than-a-section acknowledgements block before `\printbibliography`:
+```latex
+\begin{acknowledgements}
+... funding text ...
+\end{acknowledgements}
+```
+For **CNC-UC / CiBB** publications the institutional CiBB references are **mandatory** in every
+paper (`LA/P/0058/2020`, `UID/PRR/4539/2025`, `UID/04539/2025`), plus the reference(s) of the
+project(s) that fund your work (e.g. an FCT-PEX project). The default `main.tex` ships the correct
+boilerplate — replace the project-specific line with your grant(s). Canonical source: the vault's
+`Resources/publication-rules.md`.
 
 ---
 

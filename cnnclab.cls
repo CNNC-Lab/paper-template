@@ -42,12 +42,17 @@
 \RequirePackage{microtype}
 
 %% Brand colors (defined before hyperref so links can reuse them)
-\definecolor{cnncaccent}{HTML}{134E78}  % darkened brand blue
-\definecolor{cnnclink}{HTML}{0F3C5C}    % darker still, for links
+\definecolor{cnncaccent}{HTML}{134E78}  % darkened brand blue (sections, headings)
+\definecolor{cnnctitle}{HTML}{0B2E47}   % near-black blue for the title (reads bolder)
+\definecolor{cnnclink}{HTML}{0F3C5C}    % links
 \definecolor{cnncmuted}{HTML}{555555}
 
 \RequirePackage[colorlinks=true,allcolors=cnnclink]{hyperref}
 \RequirePackage[capitalise,nameinlink]{cleveref}
+
+%% ORCID icon + link. Falls back to a text link if orcidlink isn't installed.
+\IfFileExists{orcidlink.sty}{\RequirePackage{orcidlink}}{%
+  \newcommand{\orcidlink}[1]{\href{https://orcid.org/#1}{[ORCID]}}}
 
 %% Captions: small font, bold label (used by figures/tables)
 \RequirePackage[font=small,labelfont=bf,labelsep=period]{caption}
@@ -117,11 +122,13 @@
 \renewcommand{\maketitle}{%
   \begingroup
   \raggedright
-  {\LARGE\bfseries\color{cnncaccent}\@title\par}
-  \vskip 1ex
+  % Title: tight single-spaced leading (override global setspace stretch) + heavy bold.
+  {\singlespacing\bfseries\boldmath\color{cnnctitle}%
+   \fontsize{18}{20}\selectfont\@title\par}
+  \vskip 1.2ex
   {\large\@author\par}
   \ifx\@cnnc@affiliations\@empty\else
-    \vskip 0.5ex {\color{cnncmuted}\small\@cnnc@affiliations}\fi
+    \vskip 0.5ex {\singlespacing\color{cnncmuted}\small\@cnnc@affiliations}\fi
   \vskip 0.5ex
   \ifx\@cnnc@corresponding\@empty\else
     {\color{cnncmuted}\small Correspondence: \texttt{\@cnnc@corresponding}\par}\fi
@@ -147,5 +154,15 @@
    \ifx\@cnnc@keywords\@empty\else
      \vskip 1ex{\small\noindent\textbf{Keywords:} \@cnnc@keywords\par}\fi
    \vskip 1ex\hrule\vskip 2ex}
+
+%% ---------------------------------------------------------------------------
+%% Acknowledgements — compact, unnumbered, smaller than a normal section.
+%% Use:  \begin{acknowledgements} ... \end{acknowledgements}
+%% ---------------------------------------------------------------------------
+\newenvironment{acknowledgements}{%
+  \par\medskip
+  {\small\bfseries\color{cnncaccent}Acknowledgements}\par\nobreak\smallskip
+  \begingroup\footnotesize}%
+  {\par\endgroup\medskip}
 
 \endinput
