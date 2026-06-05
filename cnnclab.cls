@@ -35,20 +35,28 @@
 \RequirePackage{lmodern}
 \RequirePackage[a4paper,margin=2.5cm]{geometry}
 \RequirePackage{setspace}
-\RequirePackage{graphicx}
+\RequirePackage[final]{graphicx}  % always render images, even in draft mode
 \RequirePackage{xcolor}
 \RequirePackage{amsmath,amssymb}
 \RequirePackage{booktabs}
 \RequirePackage{microtype}
-\RequirePackage[colorlinks=true,allcolors=blue!55!black]{hyperref}
+
+%% Brand colors (defined before hyperref so links can reuse them)
+\definecolor{cnncaccent}{HTML}{134E78}  % darkened brand blue
+\definecolor{cnnclink}{HTML}{0F3C5C}    % darker still, for links
+\definecolor{cnncmuted}{HTML}{555555}
+
+\RequirePackage[colorlinks=true,allcolors=cnnclink]{hyperref}
 \RequirePackage[capitalise,nameinlink]{cleveref}
+
+%% Captions: small font, bold label (used by figures/tables)
+\RequirePackage[font=small,labelfont=bf,labelsep=period]{caption}
 
 %% Bibliography: biblatex + biber
 \RequirePackage[backend=biber,style=numeric-comp,sorting=none,maxbibnames=99,giveninits=true]{biblatex}
 
-%% Brand colors
-\definecolor{cnncaccent}{HTML}{1F6FB2}
-\definecolor{cnncmuted}{HTML}{555555}
+%% Tighter gap between section number and title.
+\renewcommand{\@seccntformat}[1]{\csname the#1\endcsname\hspace{0.5em}}
 
 %% ---------------------------------------------------------------------------
 %% Mode-dependent setup
@@ -101,17 +109,22 @@
 \newcommand{\@cnnc@runninghead}{}
 \newcommand{\runninghead}[1]{\renewcommand{\@cnnc@runninghead}{#1}}
 
+% Affiliations: \affiliation{<mark>}{<text>} accumulates one line per call.
+\newcommand{\@cnnc@affiliations}{}
+\newcommand{\affiliation}[2]{%
+  \g@addto@macro\@cnnc@affiliations{{\textsuperscript{#1}#2\par}}}
+
 \renewcommand{\maketitle}{%
   \begingroup
   \raggedright
   {\LARGE\bfseries\color{cnncaccent}\@title\par}
   \vskip 1ex
   {\large\@author\par}
+  \ifx\@cnnc@affiliations\@empty\else
+    \vskip 0.5ex {\color{cnncmuted}\small\@cnnc@affiliations}\fi
   \vskip 0.5ex
   \ifx\@cnnc@corresponding\@empty\else
     {\color{cnncmuted}\small Correspondence: \texttt{\@cnnc@corresponding}\par}\fi
-  \ifx\@cnnc@keywords\@empty\else
-    {\color{cnncmuted}\small\textbf{Keywords:} \@cnnc@keywords\par}\fi
   \endgroup
   \vskip 2ex\hrule\vskip 2ex}
 
@@ -130,6 +143,9 @@
 \renewenvironment{abstract}{%
   \vskip 1ex\noindent{\bfseries\color{cnncaccent}Abstract}\par\nobreak\vskip 0.5ex
   \begingroup\small\setlength{\parindent}{0pt}}%
-  {\par\endgroup\vskip 1ex\hrule\vskip 2ex}
+  {\par\endgroup
+   \ifx\@cnnc@keywords\@empty\else
+     \vskip 1ex{\small\noindent\textbf{Keywords:} \@cnnc@keywords\par}\fi
+   \vskip 1ex\hrule\vskip 2ex}
 
 \endinput

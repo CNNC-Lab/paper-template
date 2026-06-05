@@ -53,6 +53,46 @@ ADAPTATION.md          Rules for the (optional) formatting agent. Read before au
 
 ---
 
+## 1b. Using this on Overleaf (no Makefile required)
+
+The Makefile is a **local/CI convenience**, not a requirement. Every document in this repo
+compiles on its own with a single click in Overleaf, because all paths are written relative to
+the **project root** — which is exactly how Overleaf compiles.
+
+**Import the project**
+- *New Project → Import from GitHub* and point at `CNNC-Lab/paper-template` (keeps it synced), or
+- download a zip of the repo and *New Project → Upload Project*.
+
+`cnnclab.cls` lives at the project root, so Overleaf finds it automatically.
+
+**Set the main document** (Menu → *Main document*):
+- `main.tex` — the manuscript (default).
+- `templates/main-elife.tex` — the eLife variant build (sets `\ACTIVEJOURNAL` then inputs `main.tex`).
+- `review/response-to-reviewers.tex` — the rebuttal.
+- `correspondence/cover-letter.tex` — the cover letter.
+
+Each of these has its own `\documentclass`/`\begin{document}` and compiles standalone from the root.
+
+**Compiler & bibliography**: leave the compiler on *pdfLaTeX* (Menu → *Compiler*). Overleaf runs
+`latexmk`, which detects biblatex and runs **biber** automatically — no extra setup. (Do not set
+the bibliography tool to "bibtex"; this template uses biber.)
+
+**Switching modes without `make`**: the `make submission`/`final` targets just pass a class option.
+On Overleaf, do the same by editing the first line of `main.tex` directly:
+```latex
+\documentclass[submission]{cnnclab}   % or [review], [final], [draft]
+```
+
+**What stays local / CI only** (Overleaf doesn't need these):
+- `make diff` (tracked-changes PDF) — on Overleaf use its built-in *History → compare* / track changes.
+- `make check JOURNAL=…` (limit checker) — run locally or let GitHub Actions run it on push.
+
+> Sanity check used in CI: every document is compiled with a bare `latexmk -pdf <file>` from the
+> repo root — the same invocation Overleaf uses — so "compiles with `make`" and "compiles on
+> Overleaf" can't drift apart.
+
+---
+
 ## 2. Writing the manuscript
 
 1. Put author/title metadata at the top of `main.tex`:

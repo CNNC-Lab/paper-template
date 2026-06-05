@@ -29,6 +29,19 @@ jobs:
       - name: Build cover letter
         run: make cover
 
+      # Overleaf compiles every document from the PROJECT ROOT with a bare latexmk,
+      # never via the Makefile. Enforce that each standalone document does too, so
+      # "compiles with make" and "compiles on Overleaf" cannot drift apart.
+      - name: Overleaf-model compile (bare latexmk from root)
+        run: |
+          set -e
+          for doc in main.tex templates/main-elife.tex \
+                     review/response-to-reviewers.tex correspondence/cover-letter.tex; do
+            echo "::group::latexmk $doc"
+            latexmk -pdf -interaction=nonstopmode -halt-on-error "$doc"
+            echo "::endgroup::"
+          done
+
       - name: Upload PDFs
         if: always()
         uses: actions/upload-artifact@v4

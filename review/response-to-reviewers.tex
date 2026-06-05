@@ -11,7 +11,9 @@
 \usepackage[colorlinks=true,allcolors=blue!55!black]{hyperref}
 \usepackage[capitalise,nameinlink]{cleveref}
 \usepackage[backend=biber,style=numeric-comp,sorting=none]{biblatex}
-\addbibresource{../refs.bib}
+% Path robust to both compile roots: project root (Overleaf, `make` from root)
+% and the review/ subdir (`make rebuttal` uses latexmk -cd).
+\IfFileExists{refs.bib}{\addbibresource{refs.bib}}{\addbibresource{../refs.bib}}
 
 \definecolor{cnncaccent}{HTML}{1F6FB2}
 \setlength{\parskip}{0.6ex}

@@ -72,6 +72,9 @@ diff.pdf
 *-diff*.pdf
 review/response-to-reviewers.pdf
 correspondence/cover-letter.pdf
+# root-level outputs when these are compiled from root (Overleaf-style)
+response-to-reviewers.pdf
+cover-letter.pdf
 templates/main-elife.pdf
 # changes package
 *.soc

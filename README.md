@@ -36,6 +36,15 @@ Full manual: **[INSTRUCTIONS.md](INSTRUCTIONS.md)**.
 | `templates/main-elife.tex` | Worked example wiring a variant + journal profile. |
 | `ADAPTATION.md` | Guardrails for the optional formatting agent. |
 
+## Overleaf
+
+The Makefile is a convenience, not a requirement — the template is **Overleaf-native**. Import the
+repo (*New Project → Import from GitHub*), set the main document (`main.tex`, or
+`templates/main-elife.tex` for the eLife variant), and compile with pdfLaTeX; Overleaf runs biber
+automatically. Switch modes by editing `\documentclass[submission]{cnnclab}` directly. See
+[INSTRUCTIONS.md §1b](INSTRUCTIONS.md). Every document compiles from the project root with a bare
+`latexmk` — the same invocation Overleaf uses — and CI enforces it.
+
 ## Requirements
 
 TeX Live 2023+ (full), Git, Python 3.11+. Everything used ships with a standard TeX Live install —
