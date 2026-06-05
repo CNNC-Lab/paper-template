@@ -20,7 +20,7 @@ make rebuttal             # build the response-to-reviewers letter
 make cover                # build the cover letter
 ```
 
-Full manual: **[INSTRUCTIONS.md](INSTRUCTIONS.md)**. Design rationale: [docs/superpowers/specs/paper-template-spec.md](docs/superpowers/specs/paper-template-spec.md).
+Full manual: **[INSTRUCTIONS.md](INSTRUCTIONS.md)**.
 
 ## What's here
 

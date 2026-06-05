@@ -64,9 +64,10 @@ Thumbs.db
 *.ttt
 *.fff
 # Built PDFs (keep sources, not outputs)
-main.pdf
+# main.pdf is intentionally tracked as the compiled example document.
 main-submission.pdf
 main-final.pdf
+main-elife.pdf
 diff.pdf
 *-diff*.pdf
 review/response-to-reviewers.pdf

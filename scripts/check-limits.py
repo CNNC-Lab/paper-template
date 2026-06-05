@@ -72,9 +72,9 @@ def resolve_section(repo: Path, journal: str, name: str) -> Path | None:
 
 def strip_latex(text: str) -> str:
     """Crude LaTeX -> plain text for word counting (fallback path)."""
-    text = re.sub(r"(?<!\\)%.*", "", text)            # comments
+    text = re.sub(r"(?<!\\)%.*", "", text)  # comments
     text = re.sub(r"\\[a-zA-Z@]+\*?(\[[^\]]*\])?", " ", text)  # commands + optargs
-    text = re.sub(r"[{}\\$&~^_]", " ", text)          # residual markup
+    text = re.sub(r"[{}\\$&~^_]", " ", text)  # residual markup
     return text
 
 
@@ -84,7 +84,9 @@ def count_words(tex_path: Path) -> int:
         try:
             out = subprocess.run(
                 ["texcount", "-1", "-sum", "-merge", str(tex_path)],
-                capture_output=True, text=True, check=True,
+                capture_output=True,
+                text=True,
+                check=True,
             ).stdout.strip()
             return int(out.split()[0])
         except (subprocess.CalledProcessError, ValueError, IndexError):

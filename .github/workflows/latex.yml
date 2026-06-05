@@ -1,0 +1,58 @@
+name: LaTeX
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+
+jobs:
+  build:
+    name: Compile all documents
+    runs-on: ubuntu-latest
+    # Full TeX Live: provides latexmk, biber, latexdiff, texcount, tcolorbox, etc.
+    container: texlive/texlive:latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build manuscript (draft)
+        run: make pdf
+
+      - name: Build manuscript (submission)
+        run: make submission
+
+      - name: Build eLife variant
+        run: make elife
+
+      - name: Build response-to-reviewers
+        run: make rebuttal
+
+      - name: Build cover letter
+        run: make cover
+
+      - name: Upload PDFs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pdfs
+          path: |
+            main.pdf
+            main-submission.pdf
+            main-elife.pdf
+            review/response-to-reviewers.pdf
+            correspondence/cover-letter.pdf
+          if-no-files-found: warn
+
+  check-limits:
+    name: Journal limit check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install PyYAML (optional; script has a fallback)
+        run: pip install pyyaml
+      - name: Check eLife limits
+        run: python3 scripts/check-limits.py --journal elife
+      - name: Check PLOS Comp Biol limits
+        run: python3 scripts/check-limits.py --journal plos-comp-biol
