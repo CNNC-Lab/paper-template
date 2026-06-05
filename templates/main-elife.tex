@@ -1,0 +1,6 @@
+%% Worked example: build the manuscript for eLife.
+%% Sets the active journal so \sectioninput picks up variants/elife/*.tex,
+%% then reuses the canonical main.tex.
+%% Build:  latexmk -pdf templates/main-elife.tex   (or: make elife)
+\def\ACTIVEJOURNAL{elife}
+\input{main.tex}

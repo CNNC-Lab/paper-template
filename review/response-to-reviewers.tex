@@ -1,0 +1,83 @@
+%% response-to-reviewers.tex — the rebuttal.
+%% Self-contained: tcolorbox reviewer boxes + \point/\reply macros, biblatex-aware.
+%% No dependency on jourrr (not in every TeX distro).
+%% Build:  make rebuttal   (or: latexmk -pdf review/response-to-reviewers.tex)
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[a4paper,margin=2.5cm]{geometry}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage[colorlinks=true,allcolors=blue!55!black]{hyperref}
+\usepackage[capitalise,nameinlink]{cleveref}
+\usepackage[backend=biber,style=numeric-comp,sorting=none]{biblatex}
+\addbibresource{../refs.bib}
+
+\definecolor{cnncaccent}{HTML}{1F6FB2}
+\setlength{\parskip}{0.6ex}
+
+%% --- Rebuttal macros -------------------------------------------------------
+% \reviewer{N} starts a reviewer's block and resets point numbering.
+\newcounter{rvwr}
+\newcounter{pnt}[rvwr]
+\newcommand{\reviewer}[1]{%
+  \setcounter{rvwr}{#1}\setcounter{pnt}{0}%
+  \section*{Reviewer #1}}
+
+% \point — reviewer's comment, boxed + italic. \label after it to cross-reference.
+\newcommand{\point}{%
+  \refstepcounter{pnt}%
+  \par\medskip
+  \begin{tcolorbox}[
+      colback=cnncaccent!5, colframe=cnncaccent!60!black,
+      boxrule=0.6pt, left=2mm, right=2mm, top=1mm, bottom=1mm,
+      title={\textbf{Comment \thervwr.\thepnt}}]
+  \itshape\ignorespaces}
+
+% \reply — author's response, follows the box.
+\newcommand{\reply}{%
+  \end{tcolorbox}%
+  \par\nobreak\smallskip\noindent\textbf{Response:}\ \ignorespaces}
+
+% \crefname for points so \cref{r1.1} reads "Comment 1.1"
+\crefname{pnt}{Comment}{Comments}
+\Crefname{pnt}{Comment}{Comments}
+
+\begin{document}
+
+\begin{center}
+  {\LARGE\bfseries\color{cnncaccent} Response to Reviewers}\\[0.5ex]
+  {\large [Manuscript title]}
+\end{center}
+
+\vspace{1ex}\noindent
+We thank the reviewers for their careful reading and constructive comments. Below we respond to
+each point in turn. Reviewer comments are shown in boxes; our responses follow. Changes in the
+manuscript are marked in the accompanying tracked-changes PDF (\texttt{diff.pdf}).
+
+%% ===========================================================================
+\reviewer{1}
+
+\point\label{r1.1}
+  The authors do not justify the choice of timescale.
+\reply
+  We agree and now justify this choice in the Methods. We added a supplementary analysis showing
+  robustness across timescales, and cite supporting work~\autocite{example2025}. See the marked
+  change in \texttt{diff.pdf}.
+
+\point\label{r1.2}
+  Figure 2 is difficult to read.
+\reply
+  We have redrawn Figure~2 with larger labels and a colorblind-safe palette.
+
+%% ===========================================================================
+\reviewer{2}
+
+\point\label{r2.1}
+  The relation to prior work should be made explicit. This connects to \cref{r1.1}.
+\reply
+  We expanded the Introduction to position the contribution relative to prior work.
+
+\printbibliography
+
+\end{document}

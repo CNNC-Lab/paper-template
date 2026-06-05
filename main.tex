@@ -1,0 +1,37 @@
+%% main.tex — default manuscript entry point.
+%% Build:  make            (draft)
+%%         make submission (review-ready)
+%% For a journal-specific build, use a thin wrapper that sets \ACTIVEJOURNAL
+%% before \input{main.tex} — see templates/main-elife.tex.
+\documentclass[draft]{cnnclab}
+
+\addbibresource{refs.bib}
+
+\title{A portable manuscript template for the publication lifecycle}
+\author{R. Duarte\textsuperscript{1}}
+\corresponding{rcfduarte@gmail.com}
+\keywords{computational neuroscience; reproducibility; manuscript preparation}
+\runninghead{Publication-lifecycle template}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+\sectioninput{abstract}
+\end{abstract}
+
+\section{Introduction}\label{sec:intro}
+\sectioninput{introduction}
+
+\section{Results}\label{sec:results}
+\sectioninput{results}
+
+\section{Discussion}\label{sec:discussion}
+\sectioninput{discussion}
+
+\section{Methods}\label{sec:methods}
+\sectioninput{methods}
+
+\printbibliography
+
+\end{document}

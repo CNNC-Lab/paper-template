@@ -1,0 +1,31 @@
+# Append this block to any Python project's pyproject.toml.
+# Canonical ruff config for all Renato's Python repos (standardized 2026-04-16).
+# Review the target-version and extend-exclude per repo.
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+extend-exclude = ["docs", "notebooks", "_archive", "deprecated"]
+
+[tool.ruff.lint]
+select = [
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "F",   # pyflakes
+    "I",   # isort
+    "B",   # flake8-bugbear
+    "UP",  # pyupgrade
+    "SIM", # flake8-simplify
+    "RUF", # ruff-specific
+]
+ignore = [
+    "E501",   # line too long (handled by formatter)
+    "B008",   # mutable default arg (common in scientific code)
+    "RUF001", # ambiguous unicode in strings (μ, α, β etc. in scientific code)
+    "RUF002", # ambiguous unicode in docstrings
+    "RUF003", # ambiguous unicode in comments
+]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"

@@ -1,0 +1,76 @@
+# Canonical .gitignore for Renato's Python repos (standardized 2026-04-16).
+# Copy to <repo>/.gitignore for any new project. Extend per-repo as needed.
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+env/
+build/
+dist/
+*.egg-info/
+*.egg
+.python-version
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Secrets — NEVER commit
+.env
+.env.*
+!.env.example
+.mcp.json
+.claude/secrets/
+*.key
+*.pem
+credentials.json
+secrets/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# --- LaTeX build artifacts ---
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.run.xml
+*.synctex.gz
+*.toc
+*.lof
+*.lot
+*.ttt
+*.fff
+# Built PDFs (keep sources, not outputs)
+main.pdf
+main-submission.pdf
+main-final.pdf
+diff.pdf
+*-diff*.pdf
+review/response-to-reviewers.pdf
+correspondence/cover-letter.pdf
+templates/main-elife.pdf
+# changes package
+*.soc
