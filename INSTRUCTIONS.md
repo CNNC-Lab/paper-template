@@ -144,7 +144,43 @@ For **CNC-UC / CiBB** publications the institutional CiBB references are **manda
 paper (`LA/P/0058/2020`, `UID/PRR/4539/2025`, `UID/04539/2025`), plus the reference(s) of the
 project(s) that fund your work (e.g. an FCT-PEX project). The default `main.tex` ships the correct
 boilerplate — replace the project-specific line with your grant(s). Canonical source: the vault's
-`Resources/publication-rules.md`.
+`Resources/publication-rules.md`. Funding can also be its own section: `\begin{funding}…\end{funding}`.
+
+### Front-matter lay summary (Significance / Author Summary)
+
+Most comp-neuro venues require a short lay-accessible statement after the abstract. Use the
+`significance` environment and set the label per journal:
+```latex
+\significancelabel{Author Summary}   % PLOS; "Significance" (PNAS); "New & Noteworthy" (eNeuro)
+\begin{significance} ... \end{significance}   % default label: "Significance Statement"
+```
+
+### Back-matter statements (required by most venues)
+
+Place these after Methods (before the bibliography). They render as compact run-in statements:
+```latex
+\competinginterests{The authors declare no competing interests.}
+\authorcontributions{R.D.: Conceptualization, Methodology, Software, ... (CRediT roles).}
+\dataavailability{... Zenodo/repository DOI ...}
+\codeavailability{... GitHub + archived DOI ...}
+```
+These appear in essentially every Duarte-lab paper and are mandatory at eLife, PLOS, J Neurosci /
+eNeuro, PNAS, Nature Communications. *Intentionally not built-in* (add manually only if a target
+journal needs them): eLife funding **table**, grouped "Author ORCIDs" back-matter block, Cell Press
+"Lead Contact / Key Resources Table", Elsevier "Highlights", graphical abstract, ethics statement.
+
+### Supplementary material
+
+After `\printbibliography`, call `\beginsupplement` and add supplement sections:
+```latex
+\beginsupplement                       % renumbers figures/tables/equations as S1, S2, ...
+\suppsection{Supplementary Methods}
+\suppsection{Supplementary Figures}    % \begin{figure}... -> Fig. S1
+\suppsection{Supplementary Tables}     % \begin{table}...  -> Table S1
+```
+`\beginsupplement` first flushes any `endfloat`-deferred **main** figures (so they keep their
+1, 2, 3 numbers) and then switches figure/table/equation numbering to the `S` series. Works in all
+modes (draft, submission, final). Reference supplement floats normally with `\cref{fig:...}`.
 
 ---
 

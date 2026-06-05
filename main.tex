@@ -23,6 +23,17 @@
 \sectioninput{abstract}
 \end{abstract}
 
+% Optional front-matter lay summary. Set the label per journal:
+%   \significancelabel{Author Summary}      (PLOS)
+%   \significancelabel{Significance}         (PNAS)
+%   \significancelabel{New & Noteworthy}     (eNeuro)
+% Default label is "Significance Statement" (J Neurosci / eNeuro style).
+\begin{significance}
+A short, lay-accessible statement of why this work matters (\textasciitilde75--200 words,
+journal-dependent). Required by PLOS (Author Summary), J Neuroscience / eNeuro (Significance
+Statement), and PNAS (Significance). Delete this block for journals that do not use it.
+\end{significance}
+
 \section{Introduction}\label{sec:intro}
 \sectioninput{introduction}
 
@@ -45,7 +56,57 @@ UID/04539/2025.
 This work is funded by national funds via the FCT -- Foundation for Science and Technology,
 I.P., under project 2023.13758.PEX (HetSyn).
 \end{acknowledgements}
+% Funding can instead be its own section: \begin{funding}...\end{funding}
+
+% --- Back-matter statements required by most comp-neuro venues -----------------
+\competinginterests{The authors declare no competing interests.}
+
+\authorcontributions{% CRediT roles per author
+  R.D.: Conceptualization, Methodology, Software, Formal analysis, Writing -- original draft.}
+
+\dataavailability{All data supporting this study are available at
+  \url{https://doi.org/10.5281/zenodo.XXXXXXX}.}
+
+\codeavailability{Model and analysis code are available at
+  \url{https://github.com/CNNC-Lab/...} and archived at
+  \url{https://doi.org/10.5281/zenodo.XXXXXXX}.}
 
 \printbibliography
+
+% =============================================================================
+% Supplementary material (after the bibliography). \beginsupplement flushes any
+% deferred main figures first, then renumbers figures/tables/equations as S1, S2...
+% =============================================================================
+\beginsupplement
+
+\suppsection{Supplementary Methods}
+Additional methodological detail (e.g.\ full parameter tables, derivations, model
+descriptions) that supports but is not essential to the main text.
+
+\suppsection{Supplementary Figures}
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.5\linewidth]{figures/example-figure}
+  \caption{\textbf{Supplementary example figure.} Numbered \cref{fig:supp-example}
+    (i.e.\ Fig.~S1), independently of the main-text figures.}
+  \label{fig:supp-example}
+\end{figure}
+
+\suppsection{Supplementary Tables}
+\begin{table}[htbp]
+  \centering
+  \caption{\textbf{Supplementary example table.} Numbered \cref{tab:supp-example}
+    (Table~S1). Parameter tables are the most common supplement in modelling papers.}
+  \label{tab:supp-example}
+  \begin{tabular}{lcc}
+    \toprule
+    Parameter & Symbol & Value \\
+    \midrule
+    Number of neurons   & $N$       & $10\,000$ \\
+    Connection density  & $\epsilon$ & $0.1$ \\
+    Synaptic delay      & $d$       & $1.5$ ms \\
+    \bottomrule
+  \end{tabular}
+\end{table}
 
 \end{document}

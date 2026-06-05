@@ -156,13 +156,61 @@
    \vskip 1ex\hrule\vskip 2ex}
 
 %% ---------------------------------------------------------------------------
-%% Acknowledgements — compact, unnumbered, smaller than a normal section.
-%% Use:  \begin{acknowledgements} ... \end{acknowledgements}
+%% Significance / Author Summary — optional front-matter block (after abstract).
+%% Label is settable per journal: PLOS "Author Summary", J Neurosci / eNeuro
+%% "Significance Statement", PNAS "Significance", eLife "Impact statement".
+%% Use:  \significancelabel{Author Summary}  then
+%%       \begin{significance} ... \end{significance}
 %% ---------------------------------------------------------------------------
-\newenvironment{acknowledgements}{%
+\newcommand{\@cnnc@siglabel}{Significance Statement}
+\newcommand{\significancelabel}[1]{\renewcommand{\@cnnc@siglabel}{#1}}
+\newenvironment{significance}{%
+  \vskip 1ex\noindent{\bfseries\color{cnncaccent}\@cnnc@siglabel}\par\nobreak\vskip 0.5ex
+  \begingroup\small\setlength{\parindent}{0pt}}%
+  {\par\endgroup\vskip 1ex\hrule\vskip 2ex}
+
+%% ---------------------------------------------------------------------------
+%% Compact back-matter statements (Acknowledgements, Competing interests,
+%% Author contributions, Data/Code availability, Funding). All unnumbered,
+%% smaller than a normal section, no paragraph indent.
+%% ---------------------------------------------------------------------------
+% Block form (own heading line + paragraph), e.g. Acknowledgements.
+\newenvironment{acknowledgements}{\@cnnc@backmatter{Acknowledgements}}{\@cnnc@endbackmatter}
+\newenvironment{funding}{\@cnnc@backmatter{Funding}}{\@cnnc@endbackmatter}
+\newcommand{\@cnnc@backmatter}[1]{%
   \par\medskip
-  {\small\bfseries\color{cnncaccent}Acknowledgements}\par\nobreak\smallskip
-  \begingroup\footnotesize}%
-  {\par\endgroup\medskip}
+  \noindent{\small\bfseries\color{cnncaccent}#1}\par\nobreak\smallskip
+  \begingroup\footnotesize\setlength{\parindent}{0pt}}
+\newcommand{\@cnnc@endbackmatter}{\par\endgroup\medskip}
+
+% Run-in form (bold lead-in, text follows on same line), e.g.
+%   \competinginterests{The authors declare no competing interests.}
+\newcommand{\@cnnc@runin}[2]{%
+  \par\medskip{\footnotesize\setlength{\parindent}{0pt}%
+  {\bfseries\color{cnncaccent}#1.}\ #2\par}}
+\newcommand{\competinginterests}[1]{\@cnnc@runin{Competing interests}{#1}}
+\newcommand{\authorcontributions}[1]{\@cnnc@runin{Author contributions}{#1}}
+\newcommand{\dataavailability}[1]{\@cnnc@runin{Data availability}{#1}}
+\newcommand{\codeavailability}[1]{\@cnnc@runin{Code availability}{#1}}
+
+%% ---------------------------------------------------------------------------
+%% Supplementary material. \beginsupplement starts the supplement: it flushes
+%% any endfloat-deferred MAIN floats first (so they keep their 1,2,3 numbers),
+%% then renumbers figures/tables/equations as S1, S2, ...
+%% ---------------------------------------------------------------------------
+\if@cnnc@endfloat
+  \newcommand{\@cnnc@flushfloats}{\processdelayedfloats\clearpage}
+\else
+  \newcommand{\@cnnc@flushfloats}{\clearpage}
+\fi
+\newcommand{\beginsupplement}{%
+  \@cnnc@flushfloats
+  \setcounter{figure}{0}\renewcommand{\thefigure}{S\arabic{figure}}%
+  \setcounter{table}{0}\renewcommand{\thetable}{S\arabic{table}}%
+  \setcounter{equation}{0}\renewcommand{\theequation}{S\arabic{equation}}%
+  \section*{Supplementary Material}}
+% Heading for a supplement subsection (unnumbered, consistent styling).
+\newcommand{\suppsection}[1]{%
+  \par\medskip{\large\bfseries\color{cnncaccent}#1}\par\nobreak\medskip}
 
 \endinput
